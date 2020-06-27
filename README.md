@@ -1,4 +1,4 @@
-# LIITA
+# Love The Air
 
 A wrapper around CPCB comparision data website to obtain data programmatically.
 
