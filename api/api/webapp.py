@@ -31,47 +31,71 @@ def api():
     })
 
 
-@app.route('/states', methods=['GET'])
+@app.route('/api/states', methods=['GET'])
 def states():
     return jsonify({"states": get_states()})
 
 
-@app.route('/state/<state>', methods=['GET'])
+@app.route('/api/state/<state>', methods=['GET'])
 def state(state):
-    return jsonify({
-        "state": state,
-        "cities": get_cities(state=state)})
+    try:
+        cities = get_cities(state=state)
+        return jsonify({
+            "state": state,
+            "cities": cities}), 200
+    except Exception as e:
+        return jsonify(error(err_type="processing-error", err_message=e)), 424
 
 
-@app.route('/city/<city>', methods=['GET'])
+@app.route('/api/city/<city>', methods=['GET'])
 def stations(city):
-    return jsonify({
-        "city": city,
-        "stations": get_stations(city=city)
-    })
+    try:
+        stations = get_stations(city=city)
+        return jsonify({
+            "city": city,
+            "stations": get_stations(city=city)
+        }), 200
+    except Exception as e:
+        return jsonify(error(err_type="processing-error", err_message=e)), 424
 
 
-@app.route('/station/<s_id>', methods=['GET'])
+@app.route('/api/station/<s_id>', methods=['GET'])
 def parameters(s_id):
-    _, params = get_params(station_id=s_id)
-    station = s_id_sname(s_id=s_id)
-    return jsonify({
-        "station":station,
-        "station_id": s_id,
-        "parameters": params,
-    })
+    try:
+        _, params = get_params(station_id=s_id)
+        station = _s_id_sname(s_id=s_id)
+        return jsonify({
+            "station": station,
+            "station_id": s_id,
+            "parameters": params,
+        }), 200
+    except Exception as e:
+        return jsonify(error(err_type="processing-error", err_message=e)), 424
 
 
-@app.route('/data', methods=['POST'])
+@app.route('/api/data', methods=['POST'])
 def get_data():
     d = request.json
     if not d:
-        raise Exception(
-            'empty_payload',
-        )
+        return jsonify(error(err_type="payload_error",
+                             err_message="missing payload")), 422
+    if 'from_date' not in d:
+        return jsonify(error(err_type="payload_error",
+                             err_message="missing from_date")), 422
+    if 'to_date' not in d:
+        return jsonify(error(err_type="payload_error",
+                             err_message="missing to_date")), 422
+    if 'station_id' not in d:
+        return jsonify(error(err_type="payload_error",
+                             err_message="missing station_id")), 422
+    if 'criteria' not in d:
+        return jsonify(error(err_type="payload_error",
+                             err_message="missing criteria")), 422
+
     data, station = get(**d)
     return jsonify(
         {"station": station,
             "data": data
          }
-    )
+    ), 200
+
