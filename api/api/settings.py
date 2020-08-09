@@ -1,16 +1,15 @@
 import os
 from pymongo import MongoClient
 
-uri = os.getenv('MONGO_DB_URI')
+uri = os.getenv('MONGO_DB_URI') 
 
-client = MongoClient(uri)
-db = client['cpcb']
+client = MongoClient(uri) if uri else MongoClient()
+db = client['cpcb'] if uri else client['links']
 parameters = db["parameters"]
 stations = db["stations"]
 cities = db["cities"]
 states = db["states"]
-
-
+poll_data = db["data"]
 urls = [
     {
         "route": "/state",
@@ -40,7 +39,7 @@ urls = [
     {
         "route": "/data",
         "method": "POST",
-        "params": "",
+        "params": "from_date, to_date, station_id",
         "desc": "data...."
     }
 
