@@ -1,9 +1,17 @@
 from flask import Flask, request, jsonify
 from .db import *
 from .settings import urls
-from pymongo import MongoClient
+from .errors import error
+
 
 app = Flask(__name__)
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,POST'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 @app.route('/', methods=['GET'])
@@ -11,7 +19,7 @@ def index():
     return jsonify(
         {"name": "Air Quality Index Data",
          "source": "CPCB CCR",
-         "howto": "/api"
+         "how to": "/api"
 
          })
 
