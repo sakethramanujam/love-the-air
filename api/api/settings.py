@@ -12,26 +12,26 @@ states = db["states"]
 poll_data = db["data"]
 urls = [
     {
-        "route": "/state",
+        "route": "/api/states",
         "method": "GET",
         "params": "-",
         "desc": "returns list of states"
 
     },
     {
-        "route": "/state/<state>",
+        "route": "/api/state/<state>",
         "method": "GET",
         "params": "state",
         "desc": "list of cities with stations in given state"
     },
     {
-        "route": "/city/<city>",
+        "route": "/api/city/<city>",
         "method": "GET",
         "params": "city",
         "desc": "list of stations and their ids in city"
     },
     {
-        "route": "/station/<s_id>",
+        "route": "/api/station/<s_id>",
         "method": "GET",
         "params": "s_id",
         "desc": "list of parameters and their ids for a given station id"
@@ -39,7 +39,7 @@ urls = [
     {
         "route": "/data",
         "method": "POST",
-        "params": "from_date, to_date, station_id",
+        "params": "from_date, to_date, station_id","criteria"
         "desc": "data...."
     }
 
