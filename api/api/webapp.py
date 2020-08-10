@@ -62,8 +62,8 @@ def stations(city):
 @app.route('/api/station/<s_id>', methods=['GET'])
 def parameters(s_id):
     try:
+        station = get_station_name(station_id=s_id)
         _, params = get_params(station_id=s_id)
-        station = _s_id_sname(s_id=s_id)
         return jsonify({
             "station": station,
             "station_id": s_id,

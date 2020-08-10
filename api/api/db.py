@@ -120,8 +120,8 @@ def _get_payload(**kwargs):
     to_date = kwargs.get('to_date')
     criteria = kwargs.get('criteria')
     s_id = kwargs.get('station_id')
-    city = _s_id_city(s_id=s_id)
-    station = _s_id_sname(s_id=s_id)
+    city = get_station_city(station_id=s_id)
+    station = get_station_name(station_id=s_id)
     state = _city_state(city=city)
     ids, params = get_params(station_id=s_id)
     binary_payload = _construct_payload(criteria=criteria, from_date=from_date,
