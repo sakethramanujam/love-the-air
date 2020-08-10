@@ -5,6 +5,7 @@ Table of Contents
   - [city](#city)
   - [station](#station)
   - [data](#data)
+    - [Supported Criterion](#supported-criterion)
 
 ## Routes 
 
@@ -89,11 +90,11 @@ GET /api/station/site_273
 POST /api/data
 Content-Type: application/json
 
-{
-    "from_date":"...",
-    "to_date":"...",
-    "station_id":"...",
-    "criteria":"..."
+{ 
+    "from_date": "01-01-2018 T00:00:00Z",
+    "to_date": "02-01-2018 T00:00:00Z",
+    "criteria": "24 Hours",
+    "station_id": "site_292"
 }
 
 200 OK
@@ -116,4 +117,12 @@ Content-Type: application/json
 } 
 ```
 
-The `from_date` and `to_date` are provided as [ISO Format Timestamp](https://en.wikipedia.org/wiki/ISO_8601)
+- The `from_date` and `to_date` are provided as [ISO Format Timestamp](https://en.wikipedia.org/wiki/ISO_8601)
+
+#### Supported Criterion
+- 24 Hours
+- 8 Hours
+- 4 Hours
+- 1 Hours
+- 30 Minute
+- 25 Minute
