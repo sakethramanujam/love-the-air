@@ -21,15 +21,6 @@ def get_cities(state: str) -> List[str]:
     return [city["name"] for city in city_dict]
 
 
-def _city_state(city: str) -> str:
-    """
-    Reverse lookup state name from city name
-    """
-    queried = cities.find_one(
-        dict(citiesInState={'$elemMatch': dict(name=city)}))
-    return queried['stateName']
-
-
 def get_stations(city: str) -> Dict[str, str]:
     return stations.find_one({"cityName": city})["stationsInCity"]
 
@@ -45,22 +36,30 @@ def get_station_id(s_name: str) -> List[str]:
     return queried['stationsInCity'][0]['id']
 
 
-def _s_id_sname(s_id: str) -> str:
+def _city_state(city: str) -> str:
     """
-    Reverse lookup staition name from station id
+    Reverse lookup state name from city name
     """
-    
+    queried = cities.find_one(
+        dict(citiesInState={'$elemMatch': dict(name=city)}))
+    return queried['stateName']
+
+
+def get_station_name(station_id: str) -> str:
+    """
+    Reverse lookup station name from station id
+    """
     queried = stations.find_one(
-        dict(stationsInCity={'$elemMatch': dict(id=s_id)}))
+        dict(stationsInCity={'$elemMatch': dict(id=station_id)}))
     return queried['stationsInCity'][0]['name']
 
 
-def _s_id_city(s_id: str) -> str:
+def get_station_city(station_id: str) -> str:
     """
     Reverse lookup city from station id
     """
     queried = stations.find_one(
-        dict(stationsInCity={'$elemMatch': dict(id=s_id)}))
+        dict(stationsInCity={'$elemMatch': dict(id=station_id)}))
     return queried['cityName']
 
 
