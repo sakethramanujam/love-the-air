@@ -6,6 +6,7 @@ from .errors import error
 
 app = Flask(__name__)
 
+
 @app.after_request
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
@@ -20,7 +21,6 @@ def index():
         {"name": "Air Quality Index Data",
          "source": "CPCB CCR",
          "how to": "/api"
-
          })
 
 
