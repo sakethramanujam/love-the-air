@@ -73,28 +73,6 @@ def get_params(station_id: str) -> Union[list, list]:
     return ids, names
 
 
-def construct_payload(**kwargs) -> bytes:
-    r = {}
-    s_id = kwargs.get("station_id")
-    s_name = _s_id_sname(s_id=s_id)
-    city = _s_id_city(s_id=s_id)
-    state = _city_state(city=city)
-    ids, params = get_params(station_id=s_id)
-    r["criteria"] = kwargs.get("criteria")
-    r["reportFormat"] = "Tabular"
-    r["fromDate"] = kwargs.get("from_date")
-    r["toDate"] = kwargs.get("to_date")
-    r["addedStations"] = [{}]
-    r["addedStations"][0]["state"] = state
-    r["addedStations"][0]["city"] = city
-    r["addedStations"][0]["parameter"] = ids
-    r["addedStations"][0]["parameterName"] = params
-    r["addedStations"][0]["station"] = s_id
-    r["addedStations"][0]["stationName"] = s_name
-    rb = json.dumps(r).encode("utf-8")
-    return base64.b64encode(rb)
-
-
 def request_data(payload: str) -> Dict[object, object]:
     try:
         r = requests.post(
