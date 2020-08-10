@@ -115,7 +115,6 @@ def _construct_payload(**kwargs) -> bytes:
 
 
 def _get_payload(**kwargs):
-    print(kwargs)
     from_date = kwargs.get('from_date')
     to_date = kwargs.get('to_date')
     criteria = kwargs.get('criteria')
