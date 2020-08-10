@@ -125,4 +125,4 @@ Content-Type: application/json
 - 4 Hours
 - 1 Hours
 - 30 Minute
-- 25 Minute
+- 15 Minute
