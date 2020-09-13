@@ -3,6 +3,8 @@ import base64
 import logging
 import os
 from typing import Dict, List, Union
+from urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
 
 import requests
@@ -77,7 +79,7 @@ def request_data(payload: str) -> Dict[object, object]:
     try:
         r = requests.post(
             "https://app.cpcbccr.com/caaqms/comparision_data",
-            data=payload)
+            data=payload,verify=False)
         if r.status_code == 200 and r.text != "":
             return r.json()
         else:
