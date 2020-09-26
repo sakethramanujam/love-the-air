@@ -3,11 +3,11 @@ import base64
 import logging
 import os
 from typing import Dict, List, Union
+import requests
 from urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
 
-import requests
 
 from .settings import states, cities, parameters, stations, poll_data
 
