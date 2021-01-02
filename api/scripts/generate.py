@@ -1,7 +1,14 @@
+# !usr/bin/env python3
 import argparse
 import os
-from api.api import settings, db
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 import logging
+
+from api import db, settings
 from tqdm import tqdm
 
 stations = settings.stations
@@ -32,12 +39,12 @@ def _get_payloads(
         db._get_payload(
             station_id=st["id"], from_date=start, to_date=end, criteria=criteria
         )
-        for st in station["stationsInCity"]
-        for station in stations.find({})
+        for station in stations.find({}) for st in tqdm(station["stationsInCity"]) 
     ]
     file = os.path.join(path,"payloads.txt") or "/tmp/payloads.txt"
     with open(file, "w") as f:
-        [f.write(p + "\n") for p in tqdm(payloads)]
+        print("Writing to file...")
+        [f.write(p.decode('utf-8') + "\n") for p in tqdm(payloads)]
 
 
 def main():
