@@ -28,7 +28,7 @@ def get_stations(city: str) -> Dict[str, str]:
 
 
 def get_station_names(city: str) -> List[str]:
-    station_dict = _get_stations(city=city)
+    station_dict = get_stations(city=city)
     return [station["name"] for station in station_dict]
 
 
